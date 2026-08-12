@@ -483,9 +483,9 @@ class PersistentIdentityDB:
                 print(f"[DB WORKER ERROR] {e}")
 
     def _wipe(self):
-        print("[DB] FLUSH_ON_START=True — wiping offline gallery ...")
+        print("[DB] FLUSH_ON_START=True — wiping offline gallery (preserving attendance logs)...")
         with self.conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE offline_persons, offline_visits, attendance_sessions CASCADE")
+            cur.execute("TRUNCATE TABLE offline_persons, offline_visits CASCADE")
             cur.execute("ALTER SEQUENCE offline_gid_seq RESTART WITH 1")
         import shutil
         for f in [FAISS_INDEX_FILE, FAISS_INDEX_FILE.with_suffix(".meta.json"), FAISS_FACE_INDEX_FILE, FAISS_FACE_INDEX_FILE.with_suffix(".meta.json")]:
